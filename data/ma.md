@@ -1,17 +1,17 @@
-#intro
+# intro
 comment - //
 
-#commands as appear
+# commands as appear
 requires 
 //requires maya "1.0"
 
-#currentUnit
+# currentUnit
 //currentUnit -l centimeter -a degree -t film;
 
-#fileinfo
+# fileinfo
 //fileInfo "application" "maya";
 
-#createNode
+# createNode
 //some nodes exist in any maya scene, so -s used to avoid duplicate creation in
 //case of import. -p is parent
 
@@ -25,13 +25,13 @@ requires
 just copy unimplemented nodes as a string
 //createNode script -n "uiConfigurationScriptNode";
 
-#select
+# select
 //select -ne :time1;
 //	setAttr ".o" 1;
 //	setAttr ".unw" 1;
 
-#connectAttr
+# connectAttr
 //connectAttr "groupId1.id" "polySurfaceShape2.iog.og[0].gid";
 
-#relationship - WTF?
+# relationship - WTF?
 //relationship "link" ":lightLinker1" ":initialShadingGroup.message" ":defaultLightSet.message";
