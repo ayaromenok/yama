@@ -25,6 +25,9 @@ requires
 just copy unimplemented nodes as a string
 //createNode script -n "uiConfigurationScriptNode";
 
+### setAttr
+set nodes attributes
+
 ### select
 //select -ne :time1;
 //	setAttr ".o" 1;
@@ -36,16 +39,35 @@ just copy unimplemented nodes as a string
 #### relationship - WTF?
 //relationship "link" ":lightLinker1" ":initialShadingGroup.message" ":defaultLightSet.message";
 
-##Nodes
-transform
-camera
-mesh
-script
-//shade
-shadingEngine
-materialInfo
-phongE
-lambert
-place2dTexture
-bump2d
-groupId
+## Nodes
+
+### transform
+
+#### standard view's
+createNode transform -s -n "persp";
+createNode transform -s -n "top";
+createNode transform -s -n "front";
+createNode transform -s -n "side";
+
+### camera
+
+#### standard view's
+createNode camera -s -n "perspShape" -p "persp";
+createNode camera -s -n "topShape" -p "top";
+createNode camera -s -n "frontShape" -p "front";
+createNode camera -s -n "sideShape" -p "side";
+
+### mesh
+mesh use parent transform
+createNode transform -n "polySurface1";
+createNode mesh -n "polySurfaceShape2" -p "polySurface1";
+
+### script
+### shade nodes
+#### shadingEngine
+#### materialInfo
+#### phongE
+#### lambert
+#### place2dTexture
+#### bump2d
+#### groupId
