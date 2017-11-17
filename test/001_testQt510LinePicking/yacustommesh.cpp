@@ -2,9 +2,12 @@
 #include <Qt3DExtras/QForwardRenderer>
 #include <Qt3DExtras/QPerVertexColorMaterial>
 
-YaCustomMesh::YaCustomMesh(Qt3DCore::QEntity *rootEntity)
+YaCustomMesh::YaCustomMesh(Qt3DCore::QEntity *rootEntity,
+                           bool isLines, bool isPoints)
 {
     setParent(rootEntity);
+    _isLines = isLines;
+    _isPoints = isPoints;
     addMaterial();
     addTransform();
 
@@ -61,12 +64,29 @@ YaCustomMesh::fillVertexBuffer()
     QVector3D green(0.0f, 1.0f, 0.0f);
     QVector3D blue(0.0f, 0.0f, 1.0f);
     QVector3D white(1.0f, 1.0f, 1.0f);
+    QVector3D lightGrey(.75f, 0.75f, 0.75f);
+    QVector3D grey(0.5f, 0.5f, 0.5f);
+    QVector3D darkGrey(0.25f, 0.25f, 0.25f);
 
-    QVector<QVector3D> vertices = QVector<QVector3D>()
-            << v0 << n0 << red
-            << v1 << n1 << blue
-            << v2 << n2 << green
-            << v3 << n3 << white;
+    QVector<QVector3D> vertices;
+    if (_isLines){
+        vertices = QVector<QVector3D>()
+                << v0 << n0 << white
+                << v1 << n1 << white
+                << v2 << n2 << white
+                << v3 << n3 << white;
+    } else if (_isPoints) {
+        vertices = QVector<QVector3D>()
+                << v0 << n0 << red
+                << v1 << n1 << red
+                << v2 << n2 << red
+                << v3 << n3 << red;
+    } else
+    vertices = QVector<QVector3D>()
+            << v0 << n0 << darkGrey
+            << v1 << n1 << grey
+            << v2 << n2 << darkGrey
+            << v3 << n3 << grey;
 
     float *rawVertexArray = reinterpret_cast<float *>(vertexBufferData.data());
     int idx = 0;
@@ -173,7 +193,12 @@ YaCustomMesh::addRenderer()
     _meshRnd->setInstanceCount(1);
     _meshRnd->setIndexOffset(0);
     _meshRnd->setFirstInstance(0);
-    _meshRnd->setPrimitiveType(Qt3DRender::QGeometryRenderer::Triangles);
+    if (_isLines)
+        _meshRnd->setPrimitiveType(Qt3DRender::QGeometryRenderer::LineLoop);
+    else if (_isPoints)
+        _meshRnd->setPrimitiveType(Qt3DRender::QGeometryRenderer::Points);
+    else
+        _meshRnd->setPrimitiveType(Qt3DRender::QGeometryRenderer::Triangles);
     _meshRnd->setGeometry(_geom);
     // 4 faces of 3 points
     _meshRnd->setVertexCount(12);

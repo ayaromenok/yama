@@ -13,7 +13,9 @@
 class YaCustomMesh : public Qt3DCore::QEntity
 {
 public:
-    YaCustomMesh(Qt3DCore::QEntity *rootEntity);
+    YaCustomMesh(Qt3DCore::QEntity *rootEntity,
+                 bool isLines = false,
+                 bool isPoints = false);
 
 private:
     void fillVertexBuffer();
@@ -32,6 +34,8 @@ private:
 
     Qt3DRender::QBuffer*                _vxBuffer;
     Qt3DRender::QBuffer*                _idBuffer;
+    bool                                _isLines;
+    bool                                _isPoints;
 };
 
 #endif // YACUSTOMMESH_H

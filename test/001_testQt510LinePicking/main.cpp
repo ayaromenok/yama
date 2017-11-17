@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
 {
     QGuiApplication app(argc, argv);
     Qt3DExtras::Qt3DWindow view;
-    YaCustomMesh *yaCMesh;
+    YaCustomMesh *yaCMesh, *yaMeshLines, *yaMeshPoints;
 
     view.setHeight(480);
     view.setWidth(800);
@@ -51,7 +51,8 @@ int main(int argc, char* argv[])
     camController->setCamera(cameraEntity);
 
     yaCMesh = new YaCustomMesh(rootEntity);
-
+    yaMeshLines = new YaCustomMesh(rootEntity, true);
+    yaMeshPoints = new YaCustomMesh(rootEntity, false, true);
     view.setRootEntity(rootEntity);
     view.show();
 
